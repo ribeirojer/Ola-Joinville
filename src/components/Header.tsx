@@ -5,7 +5,19 @@ import Button from "./Button";
 import Input from "./Input";
 import { useRouter } from "next/router";
 import { UserContext } from "@/pages/_app";
-import { FacebookLogo, InstagramLogo, WhatsappLogo, TiktokLogo } from "@phosphor-icons/react";
+import {
+  FacebookLogo,
+  InstagramLogo,
+  WhatsappLogo,
+  TiktokLogo,
+  MagnifyingGlassMinus,
+  MagnifyingGlass,
+  User,
+  UserFocus,
+  UserGear,
+  UserCircle,
+  UsersFour,
+} from "@phosphor-icons/react";
 
 type Props = {};
 
@@ -42,7 +54,7 @@ const Header = (props: Props) => {
   ) {
     event.preventDefault();
     if (searchTerm) {
-      router.push(`/loja?search=${searchTerm}`);
+      router.push(`/noticias?search=${searchTerm}`);
     } else {
       searchTermRef.current?.focus();
     }
@@ -52,40 +64,42 @@ const Header = (props: Props) => {
     <header id="header">
       <div className="md:hidden h-[100px]"></div>
       <div
-        className={`hidden md:block bg-gray-200 ${isFixed ? "h-[140px]" : ""}`}
+        className={`hidden md:block bg-purple-500 ${
+          isFixed ? "h-[140px]" : ""
+        }`}
       >
         <div className="container mx-auto flex justify-between items-center px-4 md:px-0 py-2">
-            <Link href="/contato" className="text-primary">
-              Contato
-            </Link>
+          <Link
+            href="/contato"
+            className="text-white text-xl font-semibold hover:text-purple-700 transition-colors"
+          >
+            Entre em contato
+          </Link>
           <div className="flex gap-2">
-            <a
-              href="https://www.facebook.com/"
-              target="_blank"
-              className="text-primary"
-            >
-				<FacebookLogo size={32} />
+            <a href="https://www.facebook.com/olajoinville" target="_blank">
+              <FacebookLogo
+                className="fill-white hover:fill-purple-700 transition-colors"
+                size={24}
+              />
             </a>
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              className="text-primary"
-            >
-<InstagramLogo size={32} />
+            <a href="https://www.instagram.com/olajoinville" target="_blank">
+              <InstagramLogo
+                className="fill-white hover:fill-purple-700 transition-colors"
+                size={24}
+              />
             </a>
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              className="text-primary"
-            >
-<WhatsappLogo size={32} />
+            <a href="https://www.api.whatsapp.com/" target="_blank">
+              <WhatsappLogo
+                className="fill-white hover:fill-purple-700 transition-colors"
+                size={24}
+              />
             </a>
-            <a
-              href="https://www.youtube.com"
-              target="_blank"
-              className="text-primary"
-            >
-<TiktokLogo size={32} />            </a>
+            <a href="https://www.tiktok.com/olajoinville" target="_blank">
+              <TiktokLogo
+                className="fill-white hover:fill-purple-700 transition-colors"
+                size={24}
+              />
+            </a>
           </div>
         </div>
       </div>
@@ -94,7 +108,7 @@ const Header = (props: Props) => {
           isFixed
             ? "fixed top-0 left-0 w-full z-40"
             : "fixed top-0 left-0 w-full z-40 md:static"
-        } bg-pink-200 shadow transition-all`}
+        } bg-purple-200 shadow transition-all`}
       >
         <div className="container mx-auto px-4 md:px-0 flex flex-row items-center justify-between">
           <div className="w-1/3 flex justify-start">
@@ -105,12 +119,6 @@ const Header = (props: Props) => {
                 width={100}
                 height={100}
               ></Image>
-              <div className="text-center md:text-left">
-                <h1 className="text-2xl font-base satisfy">Boutique</h1>
-                <h2 className="satisfy text-2xl font-base text-[#884447]">
-                  da MOH
-                </h2>
-              </div>
             </Link>
           </div>
           <div className="flex justify-center items-center w-2/3">
@@ -142,13 +150,13 @@ const Header = (props: Props) => {
                   </li>
                   <li onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     <Link
-                      href="/loja"
+                      href="/politica"
                       passHref
                       className={
-                        router.pathname === "/loja" ? "font-bold" : "font-light"
+                        router.pathname === "/noticias" ? "font-bold" : "font-light"
                       }
                     >
-                      Loja
+                      Política
                     </Link>
                   </li>
                   <li onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -162,7 +170,7 @@ const Header = (props: Props) => {
                             : "font-light"
                         }
                       >
-                        <span className="text-pink-500">Meus dados</span>
+                        <span className="text-purple-500">Meus dados</span>
                       </Link>
                     ) : (
                       <Link
@@ -216,19 +224,14 @@ const Header = (props: Props) => {
                           id={"searchTerm"}
                           type="text"
                           inputRef={searchTermRef}
-                          placeholder="Pesquisar produtos"
+                          placeholder="Pesquisar"
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
+                        <MagnifyingGlass
                           className="absolute top-2 right-2"
-                        >
-                          <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
-                        </svg>
+                          size={24}
+                        />
                       </div>
                       <Button type="submit">Pesquisar</Button>
                     </form>
@@ -237,44 +240,54 @@ const Header = (props: Props) => {
               </nav>
             </div>
             <nav className="menularge justify-between w-full">
-			  <ul className="flex items-center gap-2">
-			    <li>
-                  <Link className="!text-gray-700 hover:!text-pink-500" href="/loja?category=f">Feminino</Link>
-				</li>
-			    <li>
-                  <Link className="!text-gray-700 hover:!text-pink-500" href="/loja?category=m">Masculino</Link>
-				</li>
-			    <li>
-				  <Link className="!text-gray-700 hover:!text-pink-500" href="/loja?category=unisex">Acessórios</Link>
-				</li>
-			  </ul>
-              <div className="flex gap-2 items-center">
-			  <form
-                onSubmit={handleSubmit}
-                className="hidden md:flex gap-2 items-center"
-              >
-                <div className="relative flex items-center">
-                  <Input
-                    id={"searchTerm"}
-                    type="text"
-                    inputRef={searchTermRef}
-                    placeholder="Pesquisar produtos"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    className="absolute top-2 right-2"
+              <ul className="flex items-center gap-2">
+                <li>
+                  <Link
+                    className="!text-gray-700 hover:!text-purple-500"
+                    href="/noticias?category=politica"
                   >
-                    <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
-                  </svg>
-                </div>
-              </form>
+                    Política
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="!text-gray-700 hover:!text-purple-500"
+                    href="/noticias?category=esportes"
+                  >
+                    Esportes
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="!text-gray-700 hover:!text-purple-500"
+                    href="/noticias?category=cultura"
+                  >
+                    Cultura
+                  </Link>
+                </li>
+              </ul>
+              <div className="flex gap-2 items-center">
+                <form
+                  onSubmit={handleSubmit}
+                  className="hidden md:flex gap-2 items-center"
+                >
+                  <div className="relative flex items-center">
+                    <Input
+                      id={"searchTerm"}
+                      type="text"
+                      inputRef={searchTermRef}
+                      placeholder="Pesquisar"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <MagnifyingGlass
+                      className="absolute top-2 right-2"
+                      size={24}
+                    />
+                  </div>
+                </form>
                 {user && (
-                  <span className="text-pink-500 font-bold">
+                  <span className="text-purple-500 font-bold">
                     {user.firstName}
                   </span>
                 )}
@@ -282,32 +295,22 @@ const Header = (props: Props) => {
                 {user ? (
                   <Link
                     href="/usuario"
-                    className="flex gap-2 items-center py-2 px-3 border border-pink-500 rounded-lg bg-white group hover:bg-pink-500 transition-all"
+                    className="flex gap-2 items-center py-2 px-3 border border-purple-500 rounded-lg bg-white group hover:bg-purple-500 transition-all"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      className="fill-pink-500 group-hover:fill-white"
-                    >
-                      <path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path>
-                    </svg>{" "}
+                    <UserCircle
+                      size={24}
+                      className="fill-purple-500 group-hover:fill-white"
+                    />
                   </Link>
                 ) : (
                   <Link
                     href="/entrar"
-                    className="flex gap-2 items-center py-2 px-3 border border-pink-500 rounded-lg bg-white group hover:bg-pink-500 transition-all"
+                    className="flex gap-2 items-center py-2 px-3 border border-purple-500 rounded-lg bg-white group hover:bg-purple-500 transition-all"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      className="fill-pink-500 group-hover:fill-white"
-                    >
-                      <path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
-                    </svg>
+                    <User
+                      size={24}
+                      className="fill-purple-500 group-hover:fill-white"
+                    ></User>
                   </Link>
                 )}
               </div>

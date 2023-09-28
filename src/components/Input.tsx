@@ -38,7 +38,7 @@ const Input = (props: Props) => {
   } = props;
 
   const defaultClassName =
-    "border-pink-300 border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-white " +
+    "border-purple-300 border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-white " +
     size;
 
   return (

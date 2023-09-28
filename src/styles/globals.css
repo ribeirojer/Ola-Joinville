@@ -3,25 +3,352 @@
 @tailwind utilities;
 
 :root {
+  font-family: "Inter", sans-serif;
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --vermelho: #ff5a5f;
+  --rosaClaro: #f7cac9;
+  --rosa-tailwind-200: #fbcfe8;
+  --pessego: #ec4899;
+  --dourado: #ffd700;
+  --roxoProfundo: #4b0082;
+  --verdeEsmeralda: #00a896;
+  --branco: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.dontshowsmall {
+  display: none;
+  @media (min-width: 350px) {
+    display: block;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.satisfy {
+	font-family: 'Satisfy', cursive;
+}
+
+#slider {
+  width: 100%;
+  height: 35vw;
+  overflow-x: hidden;
+  position: relative;
+}
+#slider img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slide-enter {
+  transform: translateX(100%);
+}
+
+.slide-enter-active {
+  transform: translateX(0%);
+  transition: transform 500ms ease;
+}
+
+.slide-exit {
+  transform: translateX(0%);
+}
+
+.slide-exit-active {
+  transform: translateX(-100%);
+  transition: transform 500ms ease;
+}
+.product-detais-link:hover .svg-icon-1,
+.product-detais-link .svg-icon-2 {
+  display: none;
+}
+.product-detais-link:hover .svg-icon-2,
+.product-detais-link .svg-icon-1 {
+  display: block;
+}
+
+.product-cart-link:hover .svg-icon-3,
+.product-cart-link .svg-icon-4 {
+  display: none;
+}
+
+.product-cart-link:hover .svg-icon-4,
+.product-cart-link .svg-icon-3 {
+  display: block;
+}
+
+.logo_text {
+  font-family: "Dancing Script", sans-serif;
+}
+
+/* Estilização do checkbox */
+.checkbox_confirmacao input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox_confirmacao label {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: -8px;
+  cursor: pointer;
+}
+
+.checkbox_confirmacao label:before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkbox_confirmacao input[type="checkbox"]:checked + label:before {
+  background-color: rgb(236 72 153);
+  border-color: transparent;
+}
+
+.checkbox_confirmacao label:after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 4px;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+.checkbox_confirmacao input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+
+/* Estilização do radio */
+.radio input[type="radio"] {
+  display: none;
+}
+
+.radio label {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+.radio label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+}
+
+.radio input[type="radio"]:checked + label:before {
+  background-color: rgb(236 72 153);
+  border-color: transparent;
+}
+
+.radio label:after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.radio input[type="radio"]:checked + label:after {
+  opacity: 1;
+}
+
+/* Menu Hamburguer */
+
+.checkbox {
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: 400ms ease-in-out 0s;
+}
+.checkbox .trace {
+  width: 50px;
+  height: 2px;
+  background-color: #222;
+  position: absolute;
+  border-radius: 4px;
+  transition: 0.5s ease-in-out;
+}
+.checkbox .trace:nth-child(1) {
+  top: 26px;
+  transform: rotate(0);
+}
+.checkbox .trace:nth-child(2) {
+  top: 46px;
+  transform: rotate(0);
+}
+.checkbox .trace:nth-child(3) {
+  top: 66px;
+  transform: rotate(0);
+}
+#toggle {
+  display: none;
+}
+
+/* menu */
+
+.menu {
+  position: absolute;
+  top: 28px;
+  right: 30px;
+  background: transparent;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px 0px #eee;
+  z-index: -1;
+  transition: 400ms ease-in-out 0s;
+}
+.menu-itens {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  transition: 400ms ease-in-out 0s;
+}
+.menu-itens ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+.menu-itens ul li a {
+  margin: 0.5rem 0;
+  color: #222;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 2rem;
+  line-height: 3.2rem;
+}
+
+/* animação do menu */
+
+#toggle:checked + .checkbox .trace:nth-child(1) {
+  transform: rotate(45deg);
+  background-color: #222;
+  top: 47px;
+}
+#toggle:checked + .checkbox .trace:nth-child(2) {
+  transform: translate(-100px);
+  width: 30px;
+  visibility: hidden;
+  opacity: 0;
+}
+#toggle:checked + .checkbox .trace:nth-child(3) {
+  transform: rotate(-45deg);
+  background-color: #222;
+  top: 48px;
+}
+#toggle:checked + .checkbox {
+  background-color: #fbcfe8;
+}
+#toggle:checked ~ .menu {
+  box-shadow: 0px 0px 0px 100vmax #fbcfe8;
+  z-index: 1;
+}
+#toggle:checked ~ .menu-itens {
+  visibility: visible;
+  opacity: 1;
+}
+
+.menularge {
+  display: none;
+}
+.menularge li a {
+  padding: 0.3rem;
+  color: #eee;
+  transition: 0.5s;
+  font-weight: 700;
+  &:hover {
+    color: #bbb;
+  }
+}
+
+.active {
+  border-bottom: 2px solid #bbb;
+}
+
+@media (min-width: 640px) {
+  .checkbox-wrapper {
+    display: none;
+  }
+  .menularge {
+    display: flex;
+    ul {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+}
+
+
+.whats {
+  position: fixed;
+  z-index: 20;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+.logo {
+  width: 4rem;
+  animation-name: pulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  transform-origin: center bottom;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: rotate(-3deg) scale(0.98);
+  }
+  20% {
+    transform: rotate(3deg) scale(1.02);
+  }
+  30% {
+    transform: rotate(-3deg) scale(1);
+  }
+  40% {
+    transform: rotate(3deg) scale(1);
+  }
+  50% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

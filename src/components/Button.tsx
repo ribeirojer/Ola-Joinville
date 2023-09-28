@@ -39,7 +39,7 @@ const Button = (props: Props) => {
       case "dark":
         return "bg-gray-800 text-white shadow-[0_4px_9px_-4px_#1f2937] transition duration-150 ease-in-out hover:bg-gray-900 hover:shadow-[0_8px_9px_-4px_rgba(31,41,55,0.3),0_4px_18px_0_rgba(31,41,55,0.2)] focus:bg-gray-900 focus:shadow-[0_8px_9px_-4px_rgba(31,41,55,0.3),0_4px_18px_0_rgba(31,41,55,0.2)] focus:outline-none focus:ring-0 active:bg-gray-900 active:shadow-[0_8px_9px_-4px_rgba(31,41,55,0.3),0_4px_18px_0_rgba(31,41,55,0.2)]";
       default:
-        return "px-4 py-2 rounded-md font-semibold text-white bg-pink-500 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50";
+        return "px-4 py-2 rounded-md font-semibold text-white bg-purple-500 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50";
     }
   };
 
@@ -50,7 +50,7 @@ const Button = (props: Props) => {
       ? "bg-transparent hover:bg-gray-100 focus:ring-2 focus:ring-gray-100 focus:ring-opacity-50 text-gray-800"
       : "",
     props.outline
-      ? "bg-pink-100 hover:bg-pink-700 focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+      ? "bg-purple-100 hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
       : "",
     props.outline &&
       "inline-block rounded border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:border-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10",
