@@ -1,26 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
 
 :root {
   font-family: "Inter", sans-serif;
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --vermelho: #ff5a5f;
-  --rosaClaro: #f7cac9;
-  --rosa-tailwind-200: #fbcfe8;
-  --pessego: #ec4899;
-  --dourado: #ffd700;
-  --roxoProfundo: #4b0082;
-  --verdeEsmeralda: #00a896;
-  --branco: #ffffff;
+  --ola-primary: #7b1fa2; /*grape*/
+  --ola-secondary: #9c27b0; /*mauveine*/
+  --ola-background: #f1ffe7ff; /*honeydew*/
+  --ola-blue: #2274a5ff; /*ucla-blue*/
+  --ola-red: #d52941ff; /*rusty-red*/
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  transition: 150ms;
+}
+
+body {
+  background: var(--ola-background);
 }
 
 .dontshowsmall {
@@ -31,7 +35,7 @@
 }
 
 .satisfy {
-	font-family: 'Satisfy', cursive;
+  font-family: "Satisfy", cursive;
 }
 
 #slider {
@@ -110,7 +114,7 @@
 }
 
 .checkbox_confirmacao input[type="checkbox"]:checked + label:before {
-  background-color: rgb(236 72 153);
+  background-color: var(--ola-primary);
   border-color: transparent;
 }
 
@@ -313,7 +317,6 @@
     }
   }
 }
-
 
 .whats {
   position: fixed;

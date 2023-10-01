@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -6,7 +7,7 @@ export default function Home() {
     <>
       <Header />
       <main className="min-h-[100vh]">
-        <h1>Página inicial</h1>
+        <HeroSection />
       </main>
       <Footer />
     </>

@@ -16,21 +16,18 @@ type Props = {};
 const Cadastrar = (props: Props) => {
   const { saveUserToContext } = useContext(UserContext);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     password: "",
   });
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const firstNameRef = useRef<HTMLInputElement | null>(null);
-  const lastNameRef = useRef<HTMLInputElement | null>(null);
+  const nameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const [errorData, setErrorData] = useState({
-    firstName: false,
-    lastName: false,
+    name: false,
     email: false,
     emailRegex: false,
     password: false,
@@ -44,8 +41,7 @@ const Cadastrar = (props: Props) => {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     setErrorData((prev) => ({
-      firstName: false,
-      lastName: false,
+      name: false,
       email: false,
       emailRegex: false,
       password: false,
@@ -56,14 +52,9 @@ const Cadastrar = (props: Props) => {
       general: false,
     }));
 
-    if (!formData.firstName) {
-      setErrorData((prev) => ({ ...prev, firstName: true }));
-      firstNameRef.current?.focus();
-      return;
-    }
-    if (!formData.lastName) {
+    if (!formData.name) {
       setErrorData((prev) => ({ ...prev, lastName: true }));
-      lastNameRef.current?.focus();
+      nameRef.current?.focus();
       return;
     }
     if (!formData.email) {
@@ -116,35 +107,23 @@ const Cadastrar = (props: Props) => {
           className="flex flex-col px-4 pb-4 gap-4 border border-purple-300 rounded-lg max-w-md mx-auto"
         >
           <Input
-            id="first-name"
+            id="name"
             type="text"
-            label="Primeiro nome"
-            error={errorData.firstName}
-            placeholder="Primeiro nome"
-            value={formData.firstName}
+            label="Nome"
+            error={errorData.name}
+            placeholder="Digite seu nome"
+            value={formData.name}
             onChange={(e: any) => {
-              setFormData({ ...formData, firstName: e.target.value });
+              setFormData({ ...formData, name: e.target.value });
             }}
-            inputRef={firstNameRef}
-          />
-          <Input
-            id="last-name"
-            type="text"
-            label="Último nome"
-            error={errorData.lastName}
-            placeholder="Último nome"
-            value={formData.lastName}
-            onChange={(e: any) => {
-              setFormData({ ...formData, lastName: e.target.value });
-            }}
-            inputRef={lastNameRef}
+            inputRef={nameRef}
           />
           <Input
             id="email"
             error={errorData.email}
             type="email"
             label="E-mail"
-            placeholder="E-mail"
+            placeholder="Digite seu e-mail"
             value={formData.email}
             onChange={(e: any) => {
               setFormData({ ...formData, email: e.target.value });
@@ -152,7 +131,7 @@ const Cadastrar = (props: Props) => {
             inputRef={emailRef}
           />
           {errorData.emailRegex && (
-            <p className="text-red-500 mt-1">E-mail inválido</p>
+            <p className="text-red-500 -mt-3">E-mail inválido</p>
           )}
           <Input
             id="password"

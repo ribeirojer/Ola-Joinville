@@ -1,29 +1,4 @@
-// import axios from "axios";
-// import {
-//   any,
-//   any,
-//   any,
-//   any,
-
-// } from "@/interfaces/User"
-class axios {
-  static post<T>(arg0: string, registration: any) {
-    throw new Error("Method not implemented.");
-  }
-  static put<T>(
-    arg0: string,
-    data: any,
-    arg2: { headers: { Authorization: string } }
-  ) {
-    throw new Error("Method not implemented.");
-  }
-  static delete<T>(arg0: string, arg1: { headers: { Authorization: string } }) {
-    throw new Error("Method not implemented.");
-  }
-  static get(arg0: string, arg1: { headers: { Authorization: string } }) {
-    throw new Error("Method not implemented.");
-  }
-}
+import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export class AuthService {
@@ -33,8 +8,8 @@ export class AuthService {
         `${BASE_URL}/auth/register`,
         registration
       );
-      const authData = response; //.data;
-      // AuthService.setAccessToken(authData.token);
+      const authData = response.data;
+      AuthService.setAccessToken(authData.token);
       return authData; //.user;
     } catch (error) {
       console.error("Error registering user: ", error);
@@ -70,8 +45,8 @@ export class AuthService {
 
   static async login(any: any): Promise<any> {
     const response = await axios.post<any>(`${BASE_URL}/auth/login`, any);
-    const authData = response; //.data;
-    // AuthService.setAccessToken(authData.token);
+    const authData = response.data;
+    AuthService.setAccessToken(authData.token);
     return authData; //.user;
   }
 
@@ -86,7 +61,7 @@ export class AuthService {
         `${BASE_URL}/auth/refresh-token`,
         { refreshToken }
       );
-      const newToken = response; //.data.token;
+      const newToken = response.data.token;
       localStorage.setItem("accessToken", "newToken");
       return "newToken";
     } catch (error) {
@@ -109,7 +84,7 @@ export class AuthService {
       });
 
       console.log(response);
-      return "response"; //.data;
+      return response.data;
     } catch (error) {
       console.error("Error subscribing to newsletter: ", error);
       throw new Error("Error subscribing to newsletter");
@@ -132,8 +107,8 @@ export class AuthService {
       }
     );
 
-    const authData = response; //.data;
-    // AuthService.setAccessToken(authData.token);
+    const authData = response.data;
+    AuthService.setAccessToken(authData.token);
     return authData; //.user;
   }
 
@@ -149,8 +124,8 @@ export class AuthService {
       },
     });
 
-    const authData = response; //.data;
-    // AuthService.setAccessToken(authData.token);
+    const authData = response.data;
+    AuthService.setAccessToken(authData.token);
     return authData; //.user;
   }
 
@@ -169,7 +144,7 @@ export class AuthService {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      return true; //response.status === 200;
+      return response.status === 200;
     } catch (error) {
       console.error(error);
       return false;
@@ -189,9 +164,9 @@ export class AuthService {
         },
       });
 
-      // if (response.data.success) {
-      //   return true;
-      // }
+      if (response.data.success) {
+        return true;
+      }
     } catch (error) {
       console.log(error);
     }

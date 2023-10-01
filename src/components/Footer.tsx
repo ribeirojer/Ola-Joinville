@@ -56,7 +56,7 @@ const Footer = () => {
         <div className="w-full px-4 md:w-1/2 lg:w-1/3 flex flex-col gap-4 items-center">
           <Link href="/" className="inline-block">
             <Image
-              src="/logo-ferrata-logo.png"
+              src="/logo.png"
               alt="logo"
               className="w-full rounded-full"
               width={140}

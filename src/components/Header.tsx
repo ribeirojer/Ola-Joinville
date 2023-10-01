@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
+import theme from "../utils/theme";
 import { useRouter } from "next/router";
 import { UserContext } from "@/pages/_app";
 import {
@@ -64,14 +65,14 @@ const Header = (props: Props) => {
     <header id="header">
       <div className="md:hidden h-[100px]"></div>
       <div
-        className={`hidden md:block bg-purple-500 ${
+        className={`hidden md:block bg-olaSecondary ${
           isFixed ? "h-[140px]" : ""
         }`}
       >
         <div className="container mx-auto flex justify-between items-center px-4 md:px-0 py-2">
           <Link
             href="/contato"
-            className="text-white text-xl font-semibold hover:text-purple-700 transition-colors"
+            className="text-white text-lg hover:text-purple-700"
           >
             Entre em contato
           </Link>
@@ -80,6 +81,7 @@ const Header = (props: Props) => {
               <FacebookLogo
                 className="fill-white hover:fill-purple-700 transition-colors"
                 size={24}
+                weight="fill"
               />
             </a>
             <a href="https://www.instagram.com/olajoinville" target="_blank">
@@ -108,16 +110,17 @@ const Header = (props: Props) => {
           isFixed
             ? "fixed top-0 left-0 w-full z-40"
             : "fixed top-0 left-0 w-full z-40 md:static"
-        } bg-purple-200 shadow transition-all`}
+        } bg-olaPrimary shadow transition-all`}
       >
-        <div className="container mx-auto px-4 md:px-0 flex flex-row items-center justify-between">
+        <div className="container mx-auto py-2 px-4 md:px-0 flex flex-row items-center justify-between">
           <div className="w-1/3 flex justify-start">
             <Link href="/" className="flex items-center">
               <Image
-                src={"/logo-sem-bg.png"}
+                src={"/logo.png"}
                 alt="logo"
-                width={100}
-                height={100}
+                width={220}
+                height={140}
+                priority={false}
               ></Image>
             </Link>
           </div>
@@ -153,7 +156,9 @@ const Header = (props: Props) => {
                       href="/politica"
                       passHref
                       className={
-                        router.pathname === "/noticias" ? "font-bold" : "font-light"
+                        router.pathname === "/noticias"
+                          ? "font-bold"
+                          : "font-light"
                       }
                     >
                       Política
@@ -243,7 +248,7 @@ const Header = (props: Props) => {
               <ul className="flex items-center gap-2">
                 <li>
                   <Link
-                    className="!text-gray-700 hover:!text-purple-500"
+                    className="!text-white hover:!text-purple-500"
                     href="/noticias?category=politica"
                   >
                     Política
@@ -251,7 +256,7 @@ const Header = (props: Props) => {
                 </li>
                 <li>
                   <Link
-                    className="!text-gray-700 hover:!text-purple-500"
+                    className="!text-white hover:!text-purple-500"
                     href="/noticias?category=esportes"
                   >
                     Esportes
@@ -259,7 +264,7 @@ const Header = (props: Props) => {
                 </li>
                 <li>
                   <Link
-                    className="!text-gray-700 hover:!text-purple-500"
+                    className="!text-white hover:!text-purple-500"
                     href="/noticias?category=cultura"
                   >
                     Cultura
@@ -287,20 +292,18 @@ const Header = (props: Props) => {
                   </div>
                 </form>
                 {user && (
-                  <span className="text-purple-500 font-bold">
-                    {user.firstName}
-                  </span>
+                  <span className="text-purple-500 font-bold">{user.name}</span>
                 )}
-
                 {user ? (
                   <Link
                     href="/usuario"
                     className="flex gap-2 items-center py-2 px-3 border border-purple-500 rounded-lg bg-white group hover:bg-purple-500 transition-all"
                   >
-                    <UserCircle
+                    <User
+                      weight="fill"
                       size={24}
                       className="fill-purple-500 group-hover:fill-white"
-                    />
+                    ></User>
                   </Link>
                 ) : (
                   <Link

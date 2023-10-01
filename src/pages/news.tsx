@@ -6,7 +6,6 @@ async function getAllNews() {
   return [
     { slug: "news-1", title: "Título da Notícia 1" },
     { slug: "news-2", title: "Título da Notícia 2" },
-    // ...
   ];
 }
 

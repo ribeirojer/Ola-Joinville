@@ -13,6 +13,13 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+    colors: {
+	  'olaPrimary': '#7b1fa2',
+	  'olaSecondary': '#9c27b0',
+	  'olaBackground': '#f1ffe7ff',
+	  'olaBlue': '#2274a5ff',
+	  'olaRed': '#d52941ff',
+	  },
     },
   },
   plugins: [],

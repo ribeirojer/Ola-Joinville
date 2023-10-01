@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useContext, useEffect, useState } from "react";
 import { AuthService } from "../services/AuthService";
-import { emailRegex, passwordRegex } from "../utils";
+import { emailRegex } from "../utils";
 import { UserContext } from "./_app";
 import { useRouter } from "next/router";
 import Button from "@/components/Button";
@@ -26,7 +26,6 @@ const Entrar = (props: Props) => {
     email: false,
     password: false,
     emailRegex: false,
-    passwordStrong: false,
     general: false,
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +37,6 @@ const Entrar = (props: Props) => {
       email: false,
       emailRegex: false,
       password: false,
-      passwordStrong: false,
       general: false,
     }));
 
@@ -54,11 +52,6 @@ const Entrar = (props: Props) => {
     }
     if (!loginInfo.password) {
       setLoginError((prev) => ({ ...prev, password: true }));
-      passwordRef.current?.focus();
-      return;
-    }
-    if (!passwordRegex.test(loginInfo.password)) {
-      setLoginError((prev) => ({ ...prev, passwordStrong: true }));
       passwordRef.current?.focus();
       return;
     }
@@ -87,17 +80,13 @@ const Entrar = (props: Props) => {
     }
   }, []);
 
-  const handleGoogleLogin = () => {
-    //
-  };
-
   return (
     <>
       <Header></Header>
       <main className="container mx-auto px-4 md:px-0 my-8 md:my-16">
         <h1 className="text-4xl text-center font-bold">Entrar</h1>
         <p className="text-center text-gray-500 my-4">
-          Faça login na sua conta para um checkout mais rápido.
+          Faça login na sua conta para comentar no Olá Joinville.
         </p>
         {/* <div className="flex gap-4 justify-center items-center">
           <button
@@ -177,9 +166,6 @@ const Entrar = (props: Props) => {
             }}
             inputRef={passwordRef}
           />
-          {loginError.passwordStrong && (
-            <p className="text-red-500 mt-1">Digite uma senha forte</p>
-          )}
           <div className="flex flex-col md:flex-row justify-between md:items-center gap-2 my-4">
             <div className="checkbox_confirmacao">
               <input
