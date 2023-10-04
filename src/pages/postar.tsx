@@ -8,6 +8,7 @@ import Loading from "@/components/Loading";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
+import UploadImage from "@/components/UploadImage";
 
 const NewPostPage = () => {
   const { user } = useContext(UserContext);
@@ -91,6 +92,7 @@ const NewPostPage = () => {
     <main className="container mx-auto p-4">
 	<h1 className="text-2xl font-bold mb-4">Criar Novo Post</h1>
       <form onSubmit={handleSubmit}>
+	  <UploadImage />
         <Input
               id="title"
               label="Título"
