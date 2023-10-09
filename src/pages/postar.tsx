@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
 import UploadImage from "@/components/UploadImage";
+import { Editor } from '@tinymce/tinymce-react';
 
 const NewPostPage = () => {
   const { user } = useContext(UserContext);
@@ -36,7 +37,12 @@ const NewPostPage = () => {
   const authorRef = useRef<HTMLInputElement | null>(null);
   const categoryRef = useRef<HTMLInputElement | null>(null);
   const tagsRef = useRef<HTMLInputElement | null>(null);
-  
+  const editorRef = useRef(null);
+  const log = () => {
+    if (editorRef.current) {
+      console.log(editorRef.current.getContent());
+    }
+  };
   /*useEffect(() => {
     if (user === undefined || user === null || user.length === 0) {
       router.push("/entrar");
@@ -90,8 +96,8 @@ const NewPostPage = () => {
     <>
       <Header></Header>
     <main className="container mx-auto p-4">
-	<h1 className="text-2xl font-bold mb-4">Criar Novo Post</h1>
-      <form onSubmit={handleSubmit}>
+	<h1 className="text-center text-2xl font-bold mb-4">Criar Novo Post</h1>
+	{/*<form onSubmit={handleSubmit}>
 	  <UploadImage />
         <Input
               id="title"
@@ -155,7 +161,63 @@ const NewPostPage = () => {
           />
         <Button type="submit">Criar Post</Button>
       </form>
-    </main>
+	  */}
+    
+      <Editor
+        tinymceScriptSrc={'/tinymce/tinymce.min.js'}
+        onInit={(evt, editor) => editorRef.current = editor}
+        initialValue='<p>This is the initial content of the editor.</p>'
+        init={{
+          height: 500,
+          menubar: false,
+          plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
+          ],
+          toolbar: 'undo redo | blocks | ' +
+            'bold italic forecolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'link image | code' +
+            'removeformat | help',
+          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+  image_title: true,
+  automatic_uploads: true,
+  file_picker_types: 'image',
+  file_picker_callback: (cb, value, meta) => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+
+    input.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        /*
+          Note: Now we need to register the blob in TinyMCEs image blob
+          registry. In the next release this part hopefully won't be
+          necessary, as we are looking to handle it internally.
+        */
+        const id = 'blobid' + (new Date()).getTime();
+        const blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+        const base64 = reader.result.split(',')[1];
+        const blobInfo = blobCache.create(id, file, base64);
+        blobCache.add(blobInfo);
+
+        /* call the callback and populate the Title field with the file name */
+        cb(blobInfo.blobUri(), { title: file.name });
+      });
+      reader.readAsDataURL(file);
+    });
+
+    input.click();
+  },
+      
+        }}
+	  />
+      <Button onClick={log}>Log editor content</Button>
+	</main>
       {isLoading && <Loading></Loading>}
       <Footer></Footer>
     </>
