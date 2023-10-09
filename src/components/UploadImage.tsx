@@ -4,7 +4,7 @@ import { Cloud } from "@phosphor-icons/react";
 const UploadImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: any) => {
     const file = e.target.files[0];
     setSelectedImage(file);
   };
