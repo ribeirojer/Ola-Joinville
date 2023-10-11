@@ -20,7 +20,7 @@ function sanitizeHTML(input: string): string {
 
 function HeroHighlight({ title, imageUrl, content }: Props) {
   const contentSanitized = decodeEntities(sanitizeHTML(content));
-	
+
   return (
     <div className="bg-white p-6 rounded shadow-lg">
       <img

@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from "axios"; // Certifique-se de ter axios instalado
 
 type Props = {
-  allNews: {id: any, title: string}[];
+  allNews: { id: any; title: string }[];
 };
 
 export async function getStaticProps() {
@@ -29,7 +29,7 @@ export async function getStaticProps() {
 }
 
 const Noticias = ({ allNews }: Props) => {
-	if(!allNews)return <p>aguarde...</p>
+  if (!allNews) return <p>aguarde...</p>;
   return (
     <>
       <Header />

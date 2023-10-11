@@ -1,4 +1,5 @@
-import { Request, Response } from "express";
+console.log("");
+/*import { Request, Response } from "express";
 import s3 from "../config/s3Config";
 
 export class UploadController {
@@ -95,3 +96,4 @@ export class UploadController {
     });
   }
 }
+*/

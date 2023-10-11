@@ -13,7 +13,7 @@ import {
   TiktokLogo,
   MagnifyingGlass,
   User,
-  FilePlus
+  FilePlus,
 } from "@phosphor-icons/react";
 
 type Props = {};
@@ -287,13 +287,18 @@ const Header = (props: Props) => {
                     />
                   </div>
                 </form>
-				{user &&
+                {user && (
                   <Link
                     href="/postar"
                     className="flex gap-2 items-center py-2 px-3 border border-purple-500 rounded-lg bg-white group hover:bg-purple-500 transition-all"
                   >
-				<FilePlus size={24} weight="fill" className="fill-purple-500 group-hover:fill-white"/>
-				</Link>}
+                    <FilePlus
+                      size={24}
+                      weight="fill"
+                      className="fill-purple-500 group-hover:fill-white"
+                    />
+                  </Link>
+                )}
                 {user && (
                   <span className="text-purple-500 font-bold">{user.name}</span>
                 )}
