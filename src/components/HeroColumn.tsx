@@ -1,4 +1,5 @@
 import React from "react";
+import { decodeEntities, sanitizeHTML, limitarDescricao } from "../utils";
 
 type Props = {
   title: string;
@@ -6,22 +7,14 @@ type Props = {
   content: string;
 };
 
-// Função para decodificar entidades HTML
-function decodeEntities(texto: string): string {
-  const elemento = document.createElement("div");
-  elemento.innerHTML = texto;
-  return elemento.textContent || "";
-}
-
-// Função para remover tags HTML e atributos perigosos
-function sanitizeHTML(input: string): string {
-  return input.replace(/<[^>]*>/g, "");
-}
-
 function HeroColumn({ title, imageUrl, content }: Props) {
-  // Sanitize e decode o conteúdo HTML
-  const contentSanitized = decodeEntities(sanitizeHTML(content));
-
+  const contentFormatted = limitarDescricao(decodeEntities(sanitizeHTML(content)), 100);
+  const imageStyle = {
+    backgroundImage: `url(${imageUrl})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+  
   return (
     <div className="bg-white p-6 rounded shadow-lg">
       <img
@@ -29,9 +22,10 @@ function HeroColumn({ title, imageUrl, content }: Props) {
         alt={`Imagem de ${title}`}
         className="w-16 h-16 mr-4"
       />
+      <div style={imageStyle} ></div>
       <div>
         <h1 className="text-3xl font-semibold">{title}</h1>
-        <p>{contentSanitized}</p>
+        <p>{contentFormatted}</p>
       </div>
     </div>
   );

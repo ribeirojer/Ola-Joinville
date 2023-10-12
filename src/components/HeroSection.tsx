@@ -33,6 +33,7 @@ function HeroSection() {
               title={post.title}
               content={post.content}
               imageUrl="https://placehold.co/400"
+			  slug={post.id}
             />
           ))}
         </div>

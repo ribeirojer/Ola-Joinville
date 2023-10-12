@@ -146,6 +146,18 @@ export function formatCurrency(value: number): string {
   });
 }
 
+// Função para decodificar entidades HTML
+export function decodeEntities(texto: string): string {
+  const elemento = document.createElement("div");
+  elemento.innerHTML = texto;
+  return elemento.textContent || "";
+}
+
+// Função para remover tags HTML e atributos perigosos
+export function sanitizeHTML(input: string): string {
+  return input.replace(/<[^>]*>/g, "");
+}
+
 export function limitarDescricao(descricao: string, limite: number): string {
   if (descricao.length > limite) {
     // Se a descrição for maior que o limite, truncá-la e adicionar "..."

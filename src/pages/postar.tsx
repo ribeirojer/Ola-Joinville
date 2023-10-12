@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
 import { Editor } from "@tinymce/tinymce-react";
-import tinymce from "../../public/tinymce/tinymce";
+import tinymce from "../../public/tinymce/tinymce.min.js";
 
 const NewPostPage = () => {
   const { user } = useContext(UserContext);

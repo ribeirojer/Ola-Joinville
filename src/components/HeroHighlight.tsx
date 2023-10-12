@@ -1,35 +1,32 @@
 import React from "react";
+import Link from "next/link";
+import { decodeEntities, sanitizeHTML, limitarDescricao } from "../utils";
 
 type Props = {
   title: string;
   imageUrl: string;
   content: string;
+  slug: string;
 };
 
-// Função para decodificar entidades HTML
-function decodeEntities(texto: string): string {
-  const elemento = document.createElement("div");
-  elemento.innerHTML = texto;
-  return elemento.textContent || "";
-}
-
-// Função para remover tags HTML e atributos perigosos
-function sanitizeHTML(input: string): string {
-  return input.replace(/<[^>]*>/g, "");
-}
-
-function HeroHighlight({ title, imageUrl, content }: Props) {
-  const contentSanitized = decodeEntities(sanitizeHTML(content));
+function HeroHighlight({ title, imageUrl, content, slug }: Props) {
+  const contentFormatted = limitarDescricao(decodeEntities(sanitizeHTML(content)), 100);
 
   return (
-    <div className="bg-white p-6 rounded shadow-lg">
-      <img
-        src={imageUrl}
-        alt={`Imagem de ${title}`}
-        className="w-32 h-32 mx-auto mb-4"
-      />
-      <h1 className="text-2xl font-semibold text-center">{title}</h1>
-      <p className="text-center">{contentSanitized}</p>
+    <div className="bg-white p-6 rounded shadow-lg relative overflow-hidden group transition-transform transform-gpu hover:scale-105">
+      <Link href={`/noticia/${slug}`}>
+          <div
+            className="relative h-32 mb-4"
+            style={{
+              backgroundImage: `url(${imageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
+          <div className="h-0.5 w-1/2 mx-auto bg-gradient-to-t from-transparent via-white to-white group-hover:from-white group-hover:via-transparent group-hover:to-transparent"></div>
+          <h1 className="text-xl font-semibold text-center">{title}</h1>
+          <p className="text-center">{contentFormatted}</p>
+      </Link>
     </div>
   );
 }
