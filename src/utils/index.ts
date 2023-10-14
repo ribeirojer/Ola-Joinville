@@ -1,5 +1,27 @@
 // import { CheckoutData } from "../interfaces/Product";
 
+export function createSlug(title: string): string {
+  // Remove espaços em branco no início e no final do título
+  let slug = title.trim().toLowerCase();
+
+  // Substitui espaços em branco e caracteres especiais por hífen
+  slug = slug.replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+  return slug;
+}
+
+export function extractImageSrcFromHTML(htmlString: string): string {
+  // Expressão regular para capturar o atributo src da tag img
+  const regex = /<img.*?src=['"](.*?)['"]/;
+  const match = htmlString.match(regex);
+
+  if (match) {
+    return match[1];
+  } else {
+    return "";
+  }
+}
+
 export function formatDateTime(date: Date): string {
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");

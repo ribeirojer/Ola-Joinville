@@ -9,16 +9,16 @@ type Props = {
   slug: string;
 };
 
-function HeroHighlight({ title, imageUrl, content, slug }: Props) {
+function HeroHighlight({post}: any) {
+  const { title, imageUrl, content, slug } = post
   const contentFormatted = limitarDescricao(decodeEntities(sanitizeHTML(content)), 100);
-
   return (
     <div className="bg-white p-6 rounded shadow-lg relative overflow-hidden group transition-transform transform-gpu hover:scale-105">
       <Link href={`/noticia/${slug}`}>
           <div
             className="relative h-32 mb-4"
             style={{
-              backgroundImage: `url(${imageUrl})`,
+              backgroundImage: `url(${imageUrl || "https://placehold.co/400"})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

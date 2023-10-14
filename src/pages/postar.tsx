@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
 import { Editor } from "@tinymce/tinymce-react";
-import tinymce from "../../public/tinymce/tinymce.min.js";
+//import tinymce from "../../public/tinymce/tinymce.min.js";
 
 const NewPostPage = () => {
   const { user } = useContext(UserContext);
@@ -158,8 +158,7 @@ const NewPostPage = () => {
                   const reader = new FileReader();
                   reader.addEventListener("load", () => {
                     const id = "blobid" + new Date().getTime();
-                    const blobCache =
-                      tinymce.activeEditor?.editorUpload.blobCache;
+                    const blobCache = tinymce.activeEditor?.editorUpload.blobCache;
                     const base64 = reader.result as string;
                     const blobInfo = blobCache?.create(
                       id,

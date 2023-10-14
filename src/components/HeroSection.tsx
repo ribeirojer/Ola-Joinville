@@ -10,42 +10,37 @@ type PostResponse = {
 };
 
 function HeroSection() {
-  const [posts, setPosts] = useState<PostResponse[]>([]);
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     axios
-      .get<PostResponse[]>("/api/posts")
+      .get<any[]>("/api/posts")
       .then((response) => {
-        setPosts(response.data.slice(0, 6)); // Pegue os primeiros 2 posts para destacar
+        setPosts(response.data.slice(0, 6));
+        setLoading(false); // Marca o carregamento como concluído após receber os dados
       })
       .catch((error) => {
         console.error("Erro ao buscar posts:", error);
+        setLoading(false); // Marca o carregamento como concluído em caso de erro
       });
   }, []);
+
+  if (loading) {
+    return <div className="text-center">Carregando...</div>; // Mostra "Carregando..." enquanto os dados estão sendo buscados
+  }
 
   return (
     <div className="bg-gray-100 py-16">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {posts.slice(0, 2).map((post) => (
-            <HeroHighlight
-              key={post.id}
-              title={post.title}
-              content={post.content}
-              imageUrl="https://placehold.co/400"
-			  slug={post.id}
-            />
+            <HeroHighlight key={post.id} post={post} />
           ))}
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-8">
           {posts.slice(2, 6).map((post) => (
-            <HeroColumn
-              key={post.id}
-              title={post.title}
-              imageUrl="https://placehold.co/400"
-              content={post.content}
-            />
+            <HeroColumn key={post.id} post={post} />
           ))}
         </div>
       </div>

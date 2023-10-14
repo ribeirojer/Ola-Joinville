@@ -1,14 +1,21 @@
 import { supabase } from "../../../lib/supabase";
 import { Post } from "../../../utils/types"; // Importe a tipagem Post (defina a tipagem de acordo com seus dados)
+import { createSlug, extractImageSrcFromHTML } from "../../../utils"
 
 async function createPost(
   title: string,
-  content: string
+  content: string,
+  summary: string,
+  author: string
 ): Promise<Post | null> {
+	
+  const slug = createSlug(title);
+  const cover_image_url = extractImageSrcFromHTML(content);
+
   try {
     const { data, error } = await supabase
       .from("posts")
-      .insert({ title, content })
+      .insert({ title, content, summary, author, cover_image_url, friendly_url: slug })
       .select("*");
 
     if (error) {
