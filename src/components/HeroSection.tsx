@@ -16,8 +16,9 @@ function HeroSection() {
   useEffect(() => {
     axios
       .get<any[]>("/api/posts")
-      .then((response) => {
-        setPosts(response.data.slice(0, 6));
+      .then((response) => {      
+	    const sortedPosts = response.data.sort((a, b) => b.id - a.id);
+        setPosts(sortedPosts.slice(0, 6));
         setLoading(false); // Marca o carregamento como concluído após receber os dados
       })
       .catch((error) => {
