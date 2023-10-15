@@ -41,14 +41,13 @@ const NewPostPage = () => {
     if (isSuccess) {
       const timer = setTimeout(() => {
         setIsSuccess(false);
-		router.push('/');
-
+        router.push("/");
       }, 4000);
 
       return () => clearTimeout(timer);
     }
   }, [isSuccess]);
-  
+
   /*useEffect(() => {
     if (user === undefined || user === null || user.length === 0) {
       router.push("/entrar");
@@ -102,7 +101,7 @@ const NewPostPage = () => {
       const response = await axios.post("/api/posts/create", data);
 
       if (response.status === 201) {
-		  setIsSuccess(true)
+        setIsSuccess(true);
       } else {
         console.error("Falha ao criar o post");
       }
@@ -216,7 +215,9 @@ const NewPostPage = () => {
         </form>
       </main>
       {isLoading && <Loading></Loading>}
-      {isSuccess && <Alert type="success" message="Notícia criada com sucesso!" />}
+      {isSuccess && (
+        <Alert type="success" message="Notícia criada com sucesso!" />
+      )}
       <Footer></Footer>
     </>
   );

@@ -5,10 +5,14 @@ import Head from "next/head";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useEffect, useState } from "react";
+import useAnalytics from "../../hooks/useAnalytics";
+import { useRouter } from "next/router";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getStaticPaths() {
   // Substitua a URL abaixo pela URL real da sua API
-  const apiUrl = "http://localhost:3000/api/posts";
+  const apiUrl = `${BASE_URL}/posts`;
 
   try {
     const response = await axios.get(apiUrl);
@@ -33,7 +37,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   // Substitua a URL abaixo pela URL real da sua API
-  const apiUrl = `http://localhost:3000/api/posts/${params.slug}`;
+  const apiUrl = `${BASE_URL}/posts/${params.slug}`;
 
   try {
     const response = await axios.get(apiUrl);
@@ -54,6 +58,8 @@ export async function getStaticProps({ params }: any) {
 
 export default function NewsDetail({ newsData }: any) {
   const [content, setContent] = useState({ __html: "" });
+  const router = useRouter();
+  useAnalytics(router.asPath);
 
   useEffect(() => {
     const htmlContent = newsData.content;

@@ -25,7 +25,7 @@ describe("AnalyticsController", () => {
 
   it("should handle invalid analytics data format", async () => {
     const analyticsData = {
-      pagevisited: 123, // invalid data type
+      pagevisited: "123", // invalid data type
       trafficsource: "search engine",
       timespentonpages: { home: 120 },
       userip: "192.168.0.1",

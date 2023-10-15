@@ -57,7 +57,7 @@ const Noticias = ({ allNews }: Props) => {
   }, [category, search]);
 
   const filteredNews = allNews.filter((news) => {
-    if (selectedCategory && !news.tags.includes(selectedCategory as string)) {
+    if (selectedCategory && !news.tags?.includes(selectedCategory as string)) {
       return false;
     }
     if (
@@ -106,7 +106,7 @@ const Noticias = ({ allNews }: Props) => {
               />
             </div>
             <ul className="space-y-4">
-              {filteredNews.map((news: any) => (
+              {allNews.map((news: any) => (
                 <li
                   key={news.id}
                   className="text-purple-700 font-semibold hover:underline text-lg"

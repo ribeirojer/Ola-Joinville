@@ -34,7 +34,12 @@ const Alert = ({ type, message }: Props) => {
         fill="currentColor"
         className="h-5 w-5"
       >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M6 18L18 6M6 6l12 12"
+        />
       </svg>
     );
   } else if (type === "warning") {
@@ -47,13 +52,21 @@ const Alert = ({ type, message }: Props) => {
         fill="currentColor"
         className="h-5 w-5"
       >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938-4H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-1.062M8 19h8M12 3v2m0 10v2" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 9v2m0 4h.01m-6.938-4H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-1.062M8 19h8M12 3v2m0 10v2"
+        />
       </svg>
     );
   }
 
   return (
-    <div className={`mb-3 inline-flex w-full items-center rounded-lg ${bgColor} px-6 py-5 text-base ${textColor}`} role="alert">
+    <div
+      className={`mb-3 inline-flex w-full items-center rounded-lg ${bgColor} px-6 py-5 text-base ${textColor}`}
+      role="alert"
+    >
       <span className="mr-2">{icon}</span>
       {message}
     </div>

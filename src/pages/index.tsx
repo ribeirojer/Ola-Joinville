@@ -1,43 +1,12 @@
-import { useEffect } from 'react';
-import Header from '@/components/Header';
-import HeroSection from '@/components/HeroSection';
-import Footer from '@/components/Footer';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { BlogAnalytics } from './api/analytics/BlogAnalytics';
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import Footer from "@/components/Footer";
+import useAnalytics from "../hooks/useAnalytics";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  const blogAnalytics = new BlogAnalytics();
   const router = useRouter();
-
-  useEffect(() => {
-    blogAnalytics.trackPageVisit(router.pathname);
-  }, [router.pathname]);
-
-  useEffect(() => {
-    const start = Date.now();
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        const elapsed = (Date.now() - start)/ 1000;
-
-        blogAnalytics.recordTimeSpentOnPage('home', elapsed); // tempo em segundos
-        blogAnalytics.setIPAddress('192.168.0.1');
-        blogAnalytics.sendAnalyticsData(); // Chame essa função para enviar os dados de analytics para o servidor
-      }
-    };
-
-    const handleBeforeUnload = (event: any) => {
-      handleVisibilityChange();
-      delete event['returnValue'];
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, []);
+  useAnalytics(router.pathname);
 
   return (
     <>

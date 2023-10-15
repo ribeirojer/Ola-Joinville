@@ -1,6 +1,18 @@
-import axios from 'axios'; // Importe o axios no início do seu arquivo
+import axios, { AxiosError, AxiosResponse } from "axios"; // Importe o axios no início do seu arquivo
 
 export class BlogAnalytics {
+  private static instance: BlogAnalytics;
+  private axiosInstance = axios.create(); // Cria uma instância única do axios
+
+  private constructor() {}
+
+  public static getInstance(): BlogAnalytics {
+    if (!BlogAnalytics.instance) {
+      BlogAnalytics.instance = new BlogAnalytics();
+    }
+    return BlogAnalytics.instance;
+  }
+
   private pagesVisited: string[] = [];
   private trafficSource: string = "";
   private timeSpentOnPages: Record<string, number> = {};
@@ -41,27 +53,34 @@ export class BlogAnalytics {
   setConversionBehavior(action: string, converted: boolean) {
     this.conversionBehavior[action] = converted;
   }
-  
+
   sendAnalyticsData() {
     const analyticsData = {
-      pagesVisited: this.pagesVisited,
-      trafficSource: this.trafficSource,
-      timeSpentOnPages: this.timeSpentOnPages,
-      userIP: this.userIP,
-      browserInfo: this.browserInfo,
-      userActions: this.userActions,
-      campaignReferences: this.campaignReferences,
-      conversionBehavior: this.conversionBehavior
+      pagevisited: this.pagesVisited,
+      trafficsource: this.trafficSource,
+      timespentonpages: this.timeSpentOnPages,
+      userip: this.userIP,
+      browserinfo: this.browserInfo,
+      useraction: this.userActions,
+      campaignreference: this.campaignReferences,
+      conversionbehavior: this.conversionBehavior,
     };
-	console.log(analyticsData)
 
-      axios.post('/api/analytics', analyticsData)
-        .then(response => {
-          // Lidar com a resposta do servidor, se necessário
-        })
-        .catch(error => {
-          // Lidar com erros de requisição, se necessário
-          console.error('Erro ao enviar os dados:', error);
-        });
+    this.axiosInstance
+      .post("/api/analytics", analyticsData)
+      .then((response: AxiosResponse) => {
+        // Lidar com a resposta do servidor, se necessário
+        console.log("Dados de analytics enviados com sucesso:", response.data);
+      })
+      .catch((error: AxiosError) => {
+        // Lidar com erros de requisição, se necessário
+        if (error.response) {
+          console.error("Erro de resposta do servidor:", error.response.data);
+        } else if (error.request) {
+          console.error("Erro de requisição:", error.request);
+        } else {
+          console.error("Erro:", error.message);
+        }
+      });
   }
 }

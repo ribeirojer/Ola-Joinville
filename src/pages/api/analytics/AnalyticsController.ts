@@ -1,7 +1,6 @@
 import { supabase } from "../../../lib/supabase";
 
 type AnalyticsDataType = {
-  id: number;
   pagevisited?: string | null;
   trafficsource?: string | null;
   timespentonpages?: { [page: string]: number } | null;
@@ -14,15 +13,18 @@ type AnalyticsDataType = {
 
 const trackEvent = async (data: AnalyticsDataType) => {
   try {
-    const { data: responseData, error } = await supabase.from('bloganalytics').insert([data]).select();
+    const { data: responseData, error } = await supabase
+      .from("bloganalytics")
+      .insert([data])
+      .select();
 
     if (error) {
-      console.error('Erro ao registrar evento de analytics:', error);
+      console.error("Erro ao registrar evento de analytics:", error);
     } else {
-      console.log('Evento de analytics registrado com sucesso:', responseData);
+      console.log("Evento de analytics registrado com sucesso:", responseData);
     }
   } catch (error) {
-    console.error('Erro durante a requisição ao Supabase:', error);
+    console.error("Erro durante a requisição ao Supabase:", error);
   }
 };
 
