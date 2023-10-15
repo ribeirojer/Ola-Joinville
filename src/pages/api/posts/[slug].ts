@@ -5,10 +5,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const postId = req.query.id;
+  const postSlug = req.query.slug;
   try {
     if (req.method === "GET") {
-      const post = await getPostById(postId as string);
+      const post = await getPostById(postSlug as string);
       return res.status(200).json(post);
     } else {
       return res.status(405).json({ error: "Método não permitido" });

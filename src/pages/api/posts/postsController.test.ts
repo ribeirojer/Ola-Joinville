@@ -9,7 +9,13 @@ import {
 
 describe("postsController", () => {
   it("should create a new post", async () => {
-    const newPost = await createPost("Test Post", "Test Content");
+    const newPost = await createPost(
+      "Title Test Post",
+      "Test Content",
+      "summary",
+      "author",
+      "tags"
+    );
     expect(newPost).toBeTruthy();
   });
 

@@ -1,21 +1,31 @@
 import { supabase } from "../../../lib/supabase";
 import { Post } from "../../../utils/types"; // Importe a tipagem Post (defina a tipagem de acordo com seus dados)
-import { createSlug, extractImageSrcFromHTML } from "../../../utils"
+import { createSlug, extractImageSrcFromHTML } from "../../../utils";
 
 async function createPost(
   title: string,
   content: string,
   summary: string,
-  author: string
+  author: string,
+  tags: string
 ): Promise<Post | null> {
-	
+  console.log(title, content, summary, author, tags);
+
   const slug = createSlug(title);
   const cover_image_url = extractImageSrcFromHTML(content);
 
   try {
     const { data, error } = await supabase
       .from("posts")
-      .insert({ title, content, summary, author, cover_image_url, friendly_url: slug })
+      .insert({
+        title,
+        content,
+        summary,
+        author,
+        tags,
+        cover_image_url,
+        friendly_url: slug,
+      })
       .select("*");
 
     if (error) {
@@ -46,12 +56,12 @@ async function getAllPosts(): Promise<Post[] | null> {
   }
 }
 
-async function getPostById(id: string): Promise<Post | null> {
+async function getPostById(slug: string): Promise<any | null> {
   try {
     const { data, error } = await supabase
       .from("posts")
-      .select("*")
-      .eq("id", id)
+      .select("created_at, title, content, author, tags")
+      .eq("friendly_url", slug)
       .single();
 
     if (error) {

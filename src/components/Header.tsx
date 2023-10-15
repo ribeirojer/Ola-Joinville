@@ -147,7 +147,7 @@ const Header = (props: Props) => {
                       Início
                     </Link>
                   </li>
-                  <li onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                  {/*<li onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     <Link
                       href="/politica"
                       passHref
@@ -159,7 +159,7 @@ const Header = (props: Props) => {
                     >
                       Política
                     </Link>
-                  </li>
+                  </li>*/}
                   <li onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     {user ? (
                       <Link
@@ -241,7 +241,7 @@ const Header = (props: Props) => {
               </nav>
             </div>
             <nav className="menularge justify-between w-full">
-              <ul className="flex items-center gap-2">
+              <ul className="items-center gap-2 hidden lg:flex">
                 <li>
                   <Link
                     className="!text-white hover:!text-purple-500"

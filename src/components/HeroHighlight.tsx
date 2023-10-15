@@ -1,31 +1,36 @@
 import React from "react";
 import Link from "next/link";
-import { decodeEntities, sanitizeHTML, limitarDescricao } from "../utils";
 
-type Props = {
+type Post = {
   title: string;
-  imageUrl: string;
-  content: string;
-  slug: string;
+  cover_image_url: string;
+  friendly_url: string;
 };
 
-function HeroHighlight({post}: any) {
-  const { title, imageUrl, content, slug } = post
-  const contentFormatted = limitarDescricao(decodeEntities(sanitizeHTML(content)), 100);
+type Props = {
+  post: Post;
+};
+
+function HeroHighlight({ post }: Props) {
+  const { title, cover_image_url, friendly_url } = post;
+  const imageStyle: React.CSSProperties = {
+    backgroundImage: `url(${cover_image_url || "https://placehold.co/400"})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+
   return (
-    <div className="bg-white p-6 rounded shadow-lg relative overflow-hidden group transition-transform transform-gpu hover:scale-105">
-      <Link href={`/noticia/${slug}`}>
-          <div
-            className="relative h-32 mb-4"
-            style={{
-              backgroundImage: `url(${imageUrl || "https://placehold.co/400"})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          ></div>
-          <div className="h-0.5 w-1/2 mx-auto bg-gradient-to-t from-transparent via-white to-white group-hover:from-white group-hover:via-transparent group-hover:to-transparent"></div>
-          <h1 className="text-xl font-semibold text-center">{title}</h1>
-          <p className="text-center">{contentFormatted}</p>
+    <div className="shadow-lg rounded-lg relative overflow-hidden group transition-transform transform-gpu">
+      <Link href={`/noticia/${friendly_url}`}>
+        <div
+          style={imageStyle}
+          className="h-64 p-4 rounded-lg hover:scale-105 relative"
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+        </div>
+        <h1 className="absolute bottom-4 text-white left-4 text-xl font-semibold">
+          {title}
+        </h1>
       </Link>
     </div>
   );

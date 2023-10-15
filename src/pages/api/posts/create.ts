@@ -6,8 +6,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { title, content, summary, author } = req.body;
-    const newPost = await createPost(title, content, summary, author);
+    const { title, content, summary, author, tags } = req.body;
+
+    const newPost = await createPost(title, content, summary, author, tags);
     return res.status(201).json(newPost);
   } else {
     return res.status(405).json({ error: "Método não permitido" });

@@ -2,10 +2,13 @@
 
 export function createSlug(title: string): string {
   // Remove espaços em branco no início e no final do título
-  let slug = title.trim().toLowerCase();
+  let slug = title
+    .normalize("NFD") // Normaliza caracteres acentuados
+    .replace(/[\u0300-\u036f]/g, "") // Remove combinações de caracteres acentuados
+    .toLowerCase(); // Converte para letras minúsculas
 
   // Substitui espaços em branco e caracteres especiais por hífen
-  slug = slug.replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  slug = slug.replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
   return slug;
 }

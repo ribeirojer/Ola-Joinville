@@ -12,8 +12,8 @@ export async function getStaticPaths() {
 
   try {
     const response = await axios.get(apiUrl);
-    const slugs = response.data.map((post: { id: { toString: () => any } }) =>
-      post.id.toString()
+    const slugs = response.data.map(
+      (post: { friendly_url: string }) => post.friendly_url
     ); // Suponha que a API retorne uma lista de slugs
 
     return {
@@ -56,21 +56,9 @@ export default function NewsDetail({ newsData }: any) {
   const [content, setContent] = useState({ __html: "" });
 
   useEffect(() => {
-    // Receba o conteúdo HTML da sua fonte de dados (newsData.content neste caso).
-    // Certifique-se de que newsData.content esteja definido ou use uma lógica apropriada para carregá-lo.
     const htmlContent = newsData.content;
-
-    // Defina o conteúdo usando dangerouslySetInnerHTML.
-    //const sanitizedHTML = sanitizeHTML(htmlContent);
     setContent({ __html: htmlContent });
   }, [newsData]);
-
-  function sanitizeHTML(input: string): string {
-    // Remova tags e atributos perigosos
-    const cleanInput = input.replace(/<[^>]*>/g, "");
-
-    return cleanInput;
-  }
 
   return (
     <>
@@ -81,14 +69,17 @@ export default function NewsDetail({ newsData }: any) {
         </Head>
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h1 className="text-3xl font-bold mb-4">{newsData.title}</h1>
-          <div className="prose" dangerouslySetInnerHTML={content}></div>
+          <div
+            className="prose text-lg"
+            dangerouslySetInnerHTML={content}
+          ></div>
           <hr className="my-4" />
           <p className="text-gray-600">Autor: {newsData.author}</p>
           <Link
-            href="/noticias"
-            className="text-blue-500 hover:underline mt-4 inline-block"
+            href="/"
+            className="text-purple-500 hover:underline mt-4 inline-block"
           >
-            Voltar as notícias
+            Voltar
           </Link>
         </div>
       </main>

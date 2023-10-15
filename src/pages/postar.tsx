@@ -8,7 +8,12 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
 import { Editor } from "@tinymce/tinymce-react";
-//import tinymce from "../../public/tinymce/tinymce.min.js";
+import tinymce from "../../public/tinymce/tinymce";
+
+interface SeuTipoDeObjeto {
+  // outras propriedades
+  getContent: () => string; // ou o tipo de retorno adequado
+}
 
 const NewPostPage = () => {
   const { user } = useContext(UserContext);
@@ -16,7 +21,6 @@ const NewPostPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [newPost, setNewPost] = useState({
     title: "",
-    content: "",
     summary: "",
     author: "",
     category: "",
@@ -25,70 +29,73 @@ const NewPostPage = () => {
   const [newPostErrors, setNewPostErrors] = useState({
     title: false,
     content: false,
-    summary: false,
-    author: false,
-    category: false,
     tags: false,
   });
   const titleRef = useRef<HTMLInputElement | null>(null);
-  const editorRef = useRef<HTMLTextAreaElement | null>(null);
-  const summaryRef = useRef<HTMLInputElement | null>(null);
+  const editorRef = useRef(null);
   const tagsRef = useRef<HTMLInputElement | null>(null);
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (user === undefined || user === null || user.length === 0) {
       router.push("/entrar");
     }
-  }, []);*/
+  }, []);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    setNewPostErrors((prev) => ({
+    const { title, summary } = newPost;
+    const content = editorRef.current as unknown as SeuTipoDeObjeto;
+
+    setNewPostErrors({
       title: false,
       content: false,
-      summary: false,
-      author: false,
-      category: false,
       tags: false,
-    }));
+    });
 
-    if (
-      newPost.title === "" ||
-      newPost.title === undefined ||
-      newPost.title === null
-    ) {
+    if (!title) {
       setNewPostErrors((prev) => ({
         ...prev,
         title: true,
       }));
-      console.log(titleRef.current);
-      titleRef.current?.focus();
+      if (titleRef.current) {
+        titleRef.current.focus();
+      }
       return;
     }
 
-    let tagsToSend = newPost.tags.split(",");
+    if (!content.getContent()) {
+      setNewPostErrors((prev) => ({
+        ...prev,
+        content: true,
+      }));
+      return;
+    }
 
+    setIsLoading(true);
+
+    const tagsToSend = newPost.tags.split(",").map((tag) => tag.trim());
     const data = {
-      title: newPost.title,
-      content: editorRef.current?.innerHTML,
-      summary: newPost.title,
+      title,
+      //content: editorRef.current?.contentDocument.activeElement.innerHTML,
+      content,
+      summary,
       author: user?.name,
       tags: tagsToSend,
     };
+
     try {
-      // Envie os dados para o servidor usando uma chamada de API (substitua a URL pela sua própria)
       const response = await axios.post("/api/posts/create", data);
 
-      // Verifique se a criação do post foi bem-sucedida
       if (response.status === 201) {
-        // Redirecione para a página do post recém-criado
         router.push(`/noticia/${response.data.id}`);
       } else {
         console.error("Falha ao criar o post");
       }
     } catch (error) {
       console.error("Erro ao criar o post:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -158,7 +165,8 @@ const NewPostPage = () => {
                   const reader = new FileReader();
                   reader.addEventListener("load", () => {
                     const id = "blobid" + new Date().getTime();
-                    const blobCache = tinymce.activeEditor?.editorUpload.blobCache;
+                    const blobCache =
+                      tinymce.activeEditor?.editorUpload.blobCache;
                     const base64 = reader.result as string;
                     const blobInfo = blobCache?.create(
                       id,
@@ -176,18 +184,6 @@ const NewPostPage = () => {
                 input.click();
               },
             }}
-          />
-          <Input
-            type="text"
-            id="summary"
-            placeholder="Digite o resumo da notícia"
-            label="Resumo (Opcional)"
-            name="summary"
-            value={newPost.summary}
-            onChange={(e) =>
-              setNewPost((prev) => ({ ...newPost, summary: e.target.value }))
-            }
-            inputRef={summaryRef}
           />
           <Input
             type="text"

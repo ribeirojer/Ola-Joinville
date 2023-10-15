@@ -48,4 +48,20 @@ function HeroSection() {
   );
 }
 
+/*export async function getStaticProps() {
+  let posts = [];
+  try {
+    const response = await axios.get("/api/posts");
+    posts = response.data.slice(0, 6);
+  } catch (error) {
+    console.error("Erro ao buscar posts:", error);
+  }
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}*/
+
 export default HeroSection;

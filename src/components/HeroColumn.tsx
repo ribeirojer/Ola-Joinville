@@ -8,31 +8,20 @@ type Props = {
   content: string;
 };
 
-function HeroColumn( {post } : any) {
-	  const { title, imageUrl, content, id } = post
-  const contentFormatted = limitarDescricao(decodeEntities(sanitizeHTML(content)), 100);
-  const imageStyle = {
-    backgroundImage: `url(${imageUrl})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  };
-  
-  return (
-    <div className="bg-white p-6 rounded shadow-lg">
-	{/*<p>{JSON.stringify(post)}</p>*/}
-	      <Link href={`/noticia/${id}`}>
+function HeroColumn({ post }: any) {
+  const { title, cover_image_url, friendly_url } = post;
+  //const contentFormatted = limitarDescricao(decodeEntities(sanitizeHTML(content)), 100);
 
-      <img
-        src={imageUrl || "https://placehold.co/400"}
-        alt={`Imagem de ${title}`}
-        className="w-16 h-16 mr-4"
-      />
-      <div style={imageStyle} ></div>
-      <div>
-        <h1 className="text-3xl font-semibold">{title}</h1>
-        <p>{contentFormatted}</p>
-      </div>
-	  </Link>
+  return (
+    <div className="p-4 bg-white rounded shadow-lg">
+      <Link href={`/noticia/${friendly_url}`} className="flex flex-col gap-4">
+        <img
+          src={cover_image_url || "https://placehold.co/400"}
+          alt={`Imagem de ${title}`}
+          className="w-full h-32 mr-4"
+        />
+        <h1 className="text-md font-semibold">{title}</h1>
+      </Link>
     </div>
   );
 }
