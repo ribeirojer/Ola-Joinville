@@ -20,16 +20,9 @@ export default function Home() {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
         const elapsed = (Date.now() - start)/ 1000;
-        console.log('Tempo gasto (segundos): ', elapsed);
 
-        blogAnalytics.setTrafficSource('search engine');
         blogAnalytics.recordTimeSpentOnPage('home', elapsed); // tempo em segundos
         blogAnalytics.setIPAddress('192.168.0.1');
-        blogAnalytics.setBrowserInfo('Chrome 94.0');
-        blogAnalytics.trackUserAction('clicked button');
-        blogAnalytics.addCampaignReference('campaign1');
-        blogAnalytics.setConversionBehavior('newsletter signup', true);
-
         blogAnalytics.sendAnalyticsData(); // Chame essa função para enviar os dados de analytics para o servidor
       }
     };

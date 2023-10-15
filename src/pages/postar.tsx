@@ -7,7 +7,9 @@ import Loading from "@/components/Loading";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
+import Alert from "@/components/Alert";
 import { Editor } from "@tinymce/tinymce-react";
+declare var tinymce: any;
 
 interface SeuTipoDeObjeto {
   // outras propriedades
@@ -18,6 +20,7 @@ const NewPostPage = () => {
   const { user } = useContext(UserContext);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [newPost, setNewPost] = useState({
     title: "",
     summary: "",
@@ -35,10 +38,22 @@ const NewPostPage = () => {
   const tagsRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setIsSuccess(false);
+		router.push('/');
+
+      }, 4000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess]);
+  
+  /*useEffect(() => {
     if (user === undefined || user === null || user.length === 0) {
       router.push("/entrar");
     }
-  }, []);
+  }, []);*/
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -77,7 +92,7 @@ const NewPostPage = () => {
     const data = {
       title,
       //content: editorRef.current?.contentDocument.activeElement.innerHTML,
-      content,
+      content: content.getContent(),
       summary,
       author: user?.name,
       tags: tagsToSend,
@@ -87,7 +102,7 @@ const NewPostPage = () => {
       const response = await axios.post("/api/posts/create", data);
 
       if (response.status === 201) {
-        router.push(`/noticia/${response.data.id}`);
+		  setIsSuccess(true)
       } else {
         console.error("Falha ao criar o post");
       }
@@ -164,8 +179,9 @@ const NewPostPage = () => {
                   const reader = new FileReader();
                   reader.addEventListener("load", () => {
                     const id = "blobid" + new Date().getTime();
-                    const blobCache =
-                      tinymce.activeEditor?.editorUpload.blobCache;
+                    const { activeEditor } = tinymce;
+                    const { editorUpload } = activeEditor;
+                    const { blobCache } = editorUpload;
                     const base64 = reader.result as string;
                     const blobInfo = blobCache?.create(
                       id,
@@ -200,6 +216,7 @@ const NewPostPage = () => {
         </form>
       </main>
       {isLoading && <Loading></Loading>}
+      {isSuccess && <Alert type="success" message="Notícia criada com sucesso!" />}
       <Footer></Footer>
     </>
   );
