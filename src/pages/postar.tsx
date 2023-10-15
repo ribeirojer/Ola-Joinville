@@ -8,7 +8,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
 import { Editor } from "@tinymce/tinymce-react";
-import tinymce from "../../public/tinymce/tinymce";
 
 interface SeuTipoDeObjeto {
   // outras propriedades
@@ -104,7 +103,7 @@ const NewPostPage = () => {
       <Header></Header>
       <main className="container mx-auto p-4">
         <h1 className="text-center text-2xl font-bold mb-4">Criar Novo Post</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Input
             id="title"
             label="Título"
